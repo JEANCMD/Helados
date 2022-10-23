@@ -6,19 +6,23 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import Equipo6.Programacion.Helados.model.Vacante;
+import Equipo6.Programacion.Helados.service.IVacantesService;
 
 @Controller
 public class HomeController {
 	
+		@Autowired
+		private IVacantesService serviceVacantes;
 	
 	@GetMapping("/tabla")
 	public String mostrarTabla(Model model) {
-		List<Vacante> lista= getVacantes();
+		List<Vacante> lista= serviceVacantes.buscarTodas();
 		model.addAttribute("vacantes", lista);
 		
 		return "tabla";
@@ -60,88 +64,10 @@ public class HomeController {
 	
 	@GetMapping("/")
 	public String mostrarHome(Model model) {
-		
-		/*
-		model.addAttribute("mensaje", "Bienvevidos a Helados Web"); 
-		model.addAttribute("fecha", new Date());*/
-		
-		String nombre = "Estrella de fresa y chocolate";
-		Date fechaAgregacion = new Date();
-		double costo = 50.00;
-		boolean vigente = true;
-		
-		model.addAttribute("nombre", nombre);
-		model.addAttribute("fecha", fechaAgregacion);
-		model.addAttribute("costo", costo);
-		model.addAttribute("vigente", vigente);
-		
+		List<Vacante> lista= serviceVacantes.buscarTodas();
+		model.addAttribute("vacantes", lista);
 		return "home";
-	}
-	
-	private List<Vacante> getVacantes(){
-		
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-		List<Vacante> lista = new LinkedList<Vacante>();
-		try {
-			
-			Vacante vacante1 = new Vacante();
-				vacante1.setId(1);
-				vacante1.setNombre("Helado Fruit cocktail");
-				vacante1.setDescripcion("Helado con frutas tropicales.");
-				vacante1.setFecha(sdf.parse("08-05-2022"));
-				vacante1.setCosto(50.00);
-				vacante1.setDestacado(1);
-				vacante1.setImagen("Helado1.jpg");
-				
-			Vacante vacante2 = new Vacante();
-				vacante2.setId(2);
-				vacante2.setNombre("Helado Strawberry and cocoa star");
-				vacante2.setDescripcion("Helado de cocoa y chocolate.");
-				vacante2.setFecha(sdf.parse("09-06-2022"));
-				vacante2.setCosto(60.00);
-				vacante2.setDestacado(0);
-				vacante2.setImagen("Helado2.jpg");
-				
-				
-
-			Vacante vacante3 = new Vacante();
-				vacante3.setId(3);
-				vacante3.setNombre("Helado Super spark bomb");
-				vacante3.setDescripcion("Helado con chispas de colores.");
-				vacante3.setFecha(sdf.parse("10-07-2022"));
-				vacante3.setCosto(40.00);
-				vacante3.setDestacado(0);
-				vacante3.setImagen("Helado3.jpg");
-				
-			Vacante vacante4 = new Vacante();
-				vacante4.setId(4);
-				vacante4.setNombre("Helado Coral ratf ");
-				vacante4.setDescripcion("Helado de chocolate y nueces con galleta.");
-				vacante4.setFecha(sdf.parse("11-08-2022"));
-				vacante4.setCosto(70.00);
-				vacante4.setDestacado(1);
-				vacante4.setImagen("Helado4.jpg");
-				
-				
-				
-				
-				
-				lista.add(vacante1);
-				lista.add(vacante2);
-				lista.add(vacante3);
-				lista.add(vacante4);
-				
-		} catch (ParseException e) {
-			
-				System.out.println("Error: "+ e.getMessage());
-		}
-			return lista;	
-		}
-		
-		
-
-		
+	    }	
 		
 	}
 	
