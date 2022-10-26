@@ -29,6 +29,11 @@ body {
     color: #fff;
 }
 
+.navbar-expand-md .navbar-nav .nav-link {
+    padding-right: 0.5rem;
+    padding-left: 2rem;
+}
+
 
 
 
